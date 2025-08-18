@@ -1,0 +1,124 @@
+================== INSTALAR E CONFIGURAR NODE DE BITCOIN EM ORANGE PI ZERO 3 APENAS PELA COMMAND LINE INTERFACE (CLI)===================
+========================================================================================================================================
+
+
+
+#1 PASSO: Atualizar lista de repositorios e os pacotes do sistema operacional
+
+==> sudo apt update && sudo apt upgrade -y
+
+#2 PASSO: Instalar dependências necessárias
+
+==> sudo apt install -y curl gnupg unzip software-properties-common
+
+#3 PASSO: Baixar, descompactar e instalar o bitcoin core do site oficial bitcoin.org
+
+==> wget https://bitcoincore.org/bin/bitcoin-core-29.0/bitcoin-29.0-aarch64-linux-gnu.tar.gz
+==> tar -xvf bitcoin-29.0-aarch64-linux-gnu.tar.gz
+
+#4 PASSO: Acessar o diretorio descompactado bitcoin-29.0
+
+==> sudo install -m 0755 -o root -g root -t /usr/local/bin bin/*
+
+#5 PASSO: Criar o diretorio .bitcoin
+
+==> mkdir -p /home/user/.bitcoin
+
+#6 PASSO: Configure o arquivo bitcoin.conf (Pruned node)
+
+==> sudo nano /home/user/.bitcoin/bitcoin.conf
+
+CONTEÚDO PARA O ARQUIVO: 
+
+server=1
+daemon=1
+#txindex=1
+rpcuser=<nodename>
+rpcpassword=<password>
+rpcallowip=127.0.0.1
+listen=1
+maxconnections=40
+prune=550
+
+
+#7 PASSO: Configurar permissões para usuário e Inicializar o node com o usuário do sistema
+
+==> sudo chown -R <bitcoin>:<bitcoin> /home/<bitcoin>/<bitcoincore>/.bitcoin
+
+==> sudo -u <username> bitcoind -datadir=/home/<username>/.bitcoin -daemon
+
+
+#8 PASSO: Verificar se está rodando
+
+==> sudo -u <username> bitcoin-cli -datadir=/home/<username>/.bitcoin getblockchaininfo
+
+#9 PASSO: Iniciar o serviço com o sistema operacional
+
+==> sudo nano /etc/systemd/system/bitcoind.service
+
+CONTEÚDO DO ARQUIVO:
+
+[Unit]
+Description=Bitcoin daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/bitcoind -datadir=/home/<username>/.bitcoin
+User=<username>
+Restart=on-failure
+TimeoutStopSec=300
+TimeoutStartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
+#10 PASSO: Configurar node para rodar na rede tor
+
+==>> sudo apt install -y tor
+
+#11 PASSO: Verificar se o serviço tor está funcionando na porta local
+
+==> sudo ss -tlpn | grep tor
+
+#12 PASSO: Adicionar usuário ao grupo de acesso a cookies do tor
+
+==> sudo usermod -aG debian-tor <username>
+==> sudo chmod 640 /run/tor/control.authcookie
+==> sudo chown debian-tor:debian-tor /run/tor/control.authcookie
+
+#13 PASSO: Editar arquivo de configuração e incluir linhas do serviço tor no bitcoin.conf
+
+==> sudo nano /home/<username>/.bitcoin/bitcoin.conf
+
+CONTEÚDO DO ARQUIVO:
+
+proxy=127.0.0.1:9050
+onion=127.0.0.1:9050
+onlynet=onion
+listen=1
+discover=0
+dnsseed=0
+
+#14 PASSO: Reiniciar o serviço bitcoind
+
+==> sudo systemctl restart bitcoind
+
+#15 PASSO: Testar o funcionamento das novas configurações
+
+==> sudo -u <username> bitcoin-cli getnetworkinfo
+
+#16 PASSO: Acompanhar sincronização da blockchain
+
+==>  tail -f ~/.bitcoin/debug.log
+
+
+
+
+
+
+
+
+
+
+
+

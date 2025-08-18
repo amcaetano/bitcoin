@@ -1,0 +1,28 @@
+# BLOCKCHAIN DO OOZARU NODE
+
+
+{
+  "chain": "main",
+  "blocks": 439028,
+  "headers": 900105,
+  "bestblockhash": "00000000000000000119871a782abf10c0fcca3c884d5d8937c3eba401953561",
+  "bits": "18045174",
+  "target": "0000000000000000045174000000000000000000000000000000000000000000",
+  "difficulty": 254620187304.0614,
+  "time": 1479215217,
+  "mediantime": 1479212292,
+  "verificationprogress": 0.1423811288154759,
+  "initialblockdownload": true,
+  "chainwork": "0000000000000000000000000000000000000000002eb69057eab800479b3007",
+  "size_on_disk": 882097251,
+  "pruned": true,
+  "pruneheight": 438641,
+  "automatic_pruning": true,
+  "prune_target_size": 576716800,
+  "warnings": [
+  ]
+}
+
+# DADOS DE UPTIME OOZARU NODE
+
+ 21:50:01 up 2 days, 22:48,  1 user,  load average: 0,25, 0,60, 1,37

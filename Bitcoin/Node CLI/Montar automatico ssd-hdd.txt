@@ -1,0 +1,26 @@
+#### INSTRUÇÕES PARA CONFIGURAR SSD OU HDD PARA INICIAR COM O SISTEMA OPERACIONAL ####
+
+1. Identifique o dispositivo e a partição
+
+==> lsblk -f
+
+Obs: Copie o UUID do dispositivo de armazenamento desejado
+
+2. Crie o ponto de montagem (se ainda não existir)
+
+==> sudo mkdir -p </home/user/dirname>
+
+3. Edite o /etc/fstab
+
+==> sudo nano /etc/fstab
+
+Linha para adicionar no fstab ==> UUID=<977c7fa8-9f97-4d83-b190-dd4f6a19d335> </home/user/dirname> <ext4> defaults,nofail,x-systemd.device-timeout=10s 0 2
+
+
+Obs: Substitua o UUID, ponto de montagem (/home/user/dirname) e tipo de sistema de arquivos (ext4) conforme seu caso.
+
+4. Teste sem reiniciar
+
+==> sudo mount -a
+
+

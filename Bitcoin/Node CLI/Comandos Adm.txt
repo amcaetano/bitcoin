@@ -1,0 +1,71 @@
+=============== COMANDO PARA ADMINISTRAÇÃO DO NODE CLI =================
+
+
+##### VERIFICAR SE O NODE ESTÁ RODANDO ####
+
+==>  ps aux | grep bitcoind
+
+
+#### VERIFICAR SE O TOR ESTÁ RODANDO ####
+
+==> systemctl status tor
+
+
+#### INICIAR DAEMON BITCOIND ####
+
+==> sudo -u <username> bitcoind -datadir=/home/<username>/.bitcoin -daemon
+
+
+#### ENCERRAR DAEMON BITCOIND COM SEGURANÇA ####
+
+==> bitcoin-cli -datadir=</home/user/.bitcoin> stop
+
+
+#### PESQUISA BASICA DA BLOCKCHAIN ####
+
+==> 'sudo -u <user> bitcoin-cli -datadir=/home/<username>/.bitcoin getblockchaininfo'
+
+
+#### VERIFICAR O HASHRATE DA REDE BITCOIN ####
+
+==> bitcoin-cli -datadir=/home/<username>/.bitcoin getnetworkhashps
+
+
+
+#### VERIFICAR QUANTOS NODES ESTAO CONECTADOS ####
+
+==> sudo -u <user> bitcoin-cli -datadir=/home/<username>/.bitcoin getconnectioncount
+
+
+#### VERIFICAR QUANTOS NODES .ONION ESTAO CONECTADOS INCLUINDO SEUS ENDEREÇOS ####
+
+==> bitcoin-cli -datadir=/home/<username>/.bitcoin getpeerinfo | jq '.[].addr'
+
+
+#### OBTER HASH DE UM BLOCO ATRAVÉS DO NUMERO DELE ####
+
+==> bitcoin-cli -datadir=/home/<username>/.bitcoin getblockhash <número_do_bloco>
+
+
+#### OBTER O HASH DO ÚLTIMO BLOCO CONHECIDO PELO NODE ####
+
+==> bitcoin-cli -datadir=/home/<username>/.bitcoin getbestblockhash 
+
+
+#### VERIFICAR METADADOS DO BLOCO USANDO O SEU HASH ####
+
+==> bitcoin-cli -datadir=/home/<username>/.bitcoin getblock <blockhash>
+
+
+#### VERIFICAR INFORMAÇÕES COMPLETAS DO BLOCO USANDO O SEU HASH ####
+
+==> bitcoin-cli -datadir=/home/<username>/.bitcoin getblock <blockhash> 2
+
+
+
+
+
+
+
+
+
